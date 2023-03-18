@@ -29,7 +29,7 @@ You can also import `all.css` to load all stylesheets at tonce
 "THE BEER-WARE LICENSE" (Revision 42):<br/>
 <pleasego@nuke.africa> wrote this file. As long as you retain this notice you<br/>
 can do whatever you want with this stuff. If we meet some day, and you think<br/>
-this stuff is worth it, you can buy me a beer in return | YieldingExploiter<br/>
+this stuff is worth it, you can buy me a beer in return | Expo<br/>
 
 (file = all files in this repository - the notice can be found in all css files in this repo & doesn't need to manually be added by you)
 
