@@ -1,0 +1,51 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.1
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Install Dependencies
+        run: pnpm i
+      - name: Concat Files
+        run: node .github/all.js
+      - name: Create Combos for optimization
+        run: node .github/combination-gen.js
+      - name: Add gen thing
+        run: node .github/import-list.js
+      - name: Beerware
+        run: node .github/add-license.js
+      - name: Build Markdown with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
